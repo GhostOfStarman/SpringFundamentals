@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="
+        http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+    
+    <!--Creates archer object with constructor injection-->
+	<bean id="archer" class="com.firstspringproject.Archer">
+		<constructor-arg name = "name" value ="Ranger1"></constructor-arg>
+		<constructor-arg name = "hp" value ="1"></constructor-arg>
+		<constructor-arg name = "attack" value ="99"></constructor-arg>
+		<constructor-arg name = "defense" value ="99"></constructor-arg>
+		
+		<!--Constructor dependency injection-->
+		<constructor-arg ref = "archUlt"/>
+	</bean>
+	
+	<!--Bean for the constructor dependency injection-->
+	<bean id ="archUlt" class ="com.firstspringproject.ArcherUlt">
+	</bean>
+	
+	
+	
+	
+	<!-- Creates wizard object with setter injection -->
+	<!-- the scope attribute "prototype" will create a new instance of the object for every new bean, Ex: scope ="prototype" -->
+	<!-- For the prototype scope, destroy method can't be called, Spring does not manage the complete lifecycle of a prototype bean -->
+	<bean id="wizard" class="com.firstspringproject.Wizard" init-method="enterBattle" destroy-method="exitBattle">
+	<!--Setter injection
+	note: for the name attribute it is whatever is after the set method in the Wizard class i.e. set'ultimateAttack'()
+	-->
+		<property name="ult" ref="wizUlt"/>
+		
+		<!--Setter injection for actual values (corresponds to setter values in POJO)-->
+		<property name="hp" value="100"/>
+		
+	</bean>
+
+	
+	<!--Bean for setter injection-->
+	<bean id ="wizUlt" class ="com.firstspringproject.WizardUlt">
+	</bean>
+	
+	
+	
+</beans>
